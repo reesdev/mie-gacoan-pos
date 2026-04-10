@@ -1,7 +1,7 @@
 Mie Gacoan POS API
 Description
 
-REST API untuk mengelola produk dan transaksi penjualan dengan sistem manajemen stok otomatis.
+A. REST API untuk mengelola produk dan transaksi penjualan dengan sistem manajemen stok otomatis.
 
 Features
 - Product CRUD (Create, Read, Update, Delete)
@@ -12,7 +12,7 @@ Features
 - Logging
 - Authentication & Authorize
 
-## Database Design
+B. Database Design
 
 ![ERD](/MIE_ERD.png)
 
@@ -28,14 +28,14 @@ Relasi:
 
 Struktur ini memungkinkan sistem menangani transaksi dengan banyak produk sekaligus serta menjaga konsistensi stok.
 
-Tech Stack
+C. Tech Stack
 - Java Spring Boot
 - Spring Data JPA
 - MySQL
 - Swagger (OpenAPI)
 - Lombok
 
-  API Endpoints
+D. API Endpoints
   
 Product 
 - POST /products
@@ -55,7 +55,7 @@ Example Request
 
 }
 
-How to Run
+E. How to Run
 
 1. Clone repository
 2. Setup database:
@@ -63,7 +63,7 @@ How to Run
 4. Run application
 5. Open Swagger: http://localhost:8080/swagger-ui/index.html
 
-Key Concept
+F. Key Concept
 - Stock hanya berubah melalui transaksi
 - Menggunakan @Transactional untuk menjaga konsistensi data
 - Menggunakan cache untuk optimasi performa
