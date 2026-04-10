@@ -27,6 +27,7 @@ Relasi:
 - Satu Sale memiliki banyak SaleItem (1:N)
 
 Struktur ini memungkinkan sistem menangani transaksi dengan banyak produk sekaligus serta menjaga konsistensi stok.
+
 Tech Stack
 - Java Spring Boot
 - Spring Data JPA
