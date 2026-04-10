@@ -1,6 +1,7 @@
 package com.miniproject.mie_gacoan_pos.service;
 
 import com.miniproject.mie_gacoan_pos.entity.Product;
+import com.miniproject.mie_gacoan_pos.exception.ProductNotFoundException;
 import com.miniproject.mie_gacoan_pos.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class ProductService {
 
     public Product getById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
     }
 
     public Product update(Long id, Product request) {

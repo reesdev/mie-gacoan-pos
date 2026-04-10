@@ -7,6 +7,8 @@ import com.miniproject.mie_gacoan_pos.dto.SaleResponse;
 import com.miniproject.mie_gacoan_pos.entity.Product;
 import com.miniproject.mie_gacoan_pos.entity.Sale;
 import com.miniproject.mie_gacoan_pos.entity.SaleItem;
+import com.miniproject.mie_gacoan_pos.exception.InsufficientStockException;
+import com.miniproject.mie_gacoan_pos.exception.ProductNotFoundException;
 import com.miniproject.mie_gacoan_pos.repository.ProductRepository;
 import com.miniproject.mie_gacoan_pos.repository.SaleRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +34,10 @@ public class SaleService {
         for (SaleItemRequest itemRequest : request.getItems()) {
 
             Product product = productRepository.findById(itemRequest.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
+                    .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
             if (product.getStock() < itemRequest.getQuantity()) {
-                throw new RuntimeException("Stock not enough");
+                throw new InsufficientStockException("Stock not enough");
             }
 
             product.setStock(product.getStock() - itemRequest.getQuantity());
