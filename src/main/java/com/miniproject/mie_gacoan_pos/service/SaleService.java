@@ -12,6 +12,7 @@ import com.miniproject.mie_gacoan_pos.exception.ProductNotFoundException;
 import com.miniproject.mie_gacoan_pos.repository.ProductRepository;
 import com.miniproject.mie_gacoan_pos.repository.SaleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class SaleService {
     private final ProductRepository productRepository;
     private final SaleRepository saleRepository;
 
+    @CacheEvict(value = "products", allEntries = true)
     @Transactional
     public Sale createSale(CreateSaleRequest request) {
 
