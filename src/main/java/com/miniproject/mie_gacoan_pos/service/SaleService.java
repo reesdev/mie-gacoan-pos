@@ -2,6 +2,8 @@ package com.miniproject.mie_gacoan_pos.service;
 
 import com.miniproject.mie_gacoan_pos.dto.CreateSaleRequest;
 import com.miniproject.mie_gacoan_pos.dto.SaleItemRequest;
+import com.miniproject.mie_gacoan_pos.dto.SaleItemResponse;
+import com.miniproject.mie_gacoan_pos.dto.SaleResponse;
 import com.miniproject.mie_gacoan_pos.entity.Product;
 import com.miniproject.mie_gacoan_pos.entity.Sale;
 import com.miniproject.mie_gacoan_pos.entity.SaleItem;
@@ -63,5 +65,19 @@ public class SaleService {
         }
 
         return saleRepository.save(sale);
+    }
+    public SaleResponse mapToResponse(Sale sale) {
+        return SaleResponse.builder()
+                .id(sale.getId())
+                .orderDate(sale.getOrderDate())
+                .totalAmount(sale.getTotalAmount())
+                .items(sale.getItems().stream().map(item ->
+                        SaleItemResponse.builder()
+                                .productId(item.getProduct().getId())
+                                .quantity(item.getQuantity())
+                                .price(item.getPrice())
+                                .build()
+                ).toList())
+                .build();
     }
 }
