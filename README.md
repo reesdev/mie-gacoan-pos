@@ -11,6 +11,21 @@ Features
 - Caching (product list)
 - Logging
 
+## Database Design
+
+![ERD](/MIE_ERD.png)
+
+ERD ini menggambarkan relasi antara Product, Sale, dan SaleItem dalam sistem transaksi penjualan.
+
+- Product menyimpan data produk dan stok
+- Sale merepresentasikan transaksi
+- SaleItem menyimpan detail produk dalam setiap transaksi
+
+Relasi:
+- Satu Product dapat muncul di banyak SaleItem (1:N)
+- Satu Sale memiliki banyak SaleItem (1:N)
+
+Struktur ini memungkinkan sistem menangani transaksi dengan banyak produk sekaligus serta menjaga konsistensi stok.
 Tech Stack
 - Java Spring Boot
 - Spring Data JPA
