@@ -12,6 +12,8 @@ import com.miniproject.mie_gacoan_pos.exception.ProductNotFoundException;
 import com.miniproject.mie_gacoan_pos.repository.ProductRepository;
 import com.miniproject.mie_gacoan_pos.repository.SaleRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,20 +27,22 @@ public class SaleService {
 
     private final ProductRepository productRepository;
     private final SaleRepository saleRepository;
+    private static final Logger log = LoggerFactory.getLogger(SaleService.class);
 
     @CacheEvict(value = "products", allEntries = true)
     @Transactional
     public Sale createSale(CreateSaleRequest request) {
-
+        log.info("Starting sales transaction");
         List<SaleItem> saleItems = new ArrayList<>();
         double totalAmount = 0;
 
         for (SaleItemRequest itemRequest : request.getItems()) {
-
+            log.info("Processing product id: {}", itemRequest.getProductId());
             Product product = productRepository.findById(itemRequest.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
             if (product.getStock() < itemRequest.getQuantity()) {
+                log.warn("Stock not enough for product id: {}", product.getId());
                 throw new InsufficientStockException("Stock not enough");
             }
 
@@ -67,7 +71,7 @@ public class SaleService {
         for (SaleItem item : saleItems) {
             item.setSale(sale);
         }
-
+        log.info("Transaction success with total amount: {}", totalAmount);
         return saleRepository.save(sale);
     }
     public SaleResponse mapToResponse(Sale sale) {
