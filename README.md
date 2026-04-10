@@ -10,6 +10,7 @@ Features
 - Validation & Exception Handling
 - Caching (product list)
 - Logging
+- Authentication & Authorize
 
 ## Database Design
 
