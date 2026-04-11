@@ -70,8 +70,7 @@ public class SaleService {
                 .totalAmount(totalAmount)
                 .items(saleItems)
                 .build();
-
-        // set relation
+        
         for (SaleItem item : saleItems) {
             item.setSale(sale);
         }
