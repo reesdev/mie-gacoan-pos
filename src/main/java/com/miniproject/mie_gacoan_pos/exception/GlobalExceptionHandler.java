@@ -37,4 +37,14 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBadRequest(BadRequestException ex) {
+        return new ErrorResponse(
+                "BAD_REQUEST",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+    }
 }
