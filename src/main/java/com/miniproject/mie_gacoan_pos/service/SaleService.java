@@ -7,6 +7,7 @@ import com.miniproject.mie_gacoan_pos.dto.SaleResponse;
 import com.miniproject.mie_gacoan_pos.entity.Product;
 import com.miniproject.mie_gacoan_pos.entity.Sale;
 import com.miniproject.mie_gacoan_pos.entity.SaleItem;
+import com.miniproject.mie_gacoan_pos.exception.BadRequestException;
 import com.miniproject.mie_gacoan_pos.exception.InsufficientStockException;
 import com.miniproject.mie_gacoan_pos.exception.ProductNotFoundException;
 import com.miniproject.mie_gacoan_pos.repository.ProductRepository;
@@ -32,6 +33,9 @@ public class SaleService {
     @CacheEvict(value = "products", allEntries = true)
     @Transactional
     public Sale createSale(CreateSaleRequest request) {
+        if (request.getItems() == null || request.getItems().isEmpty()) {
+            throw new BadRequestException("Items cannot be empty");
+        }
         log.info("Starting sales transaction");
         List<SaleItem> saleItems = new ArrayList<>();
         double totalAmount = 0;
